@@ -2,45 +2,31 @@
 // components/TaskColumn.tsx
 
 // components/TaskColumn.tsx
-
-import { Droppable, Draggable } from 'react-beautiful-dnd';
-import { useState } from 'react';
-import TaskModal from './TaskModal';
-import {Task} from '../types/types';
-
-
+// components/TaskColumn.tsx
+// components/TaskColumn.tsx
+import React from 'react';
+import { Task } from '../types/types';
+import TaskCard from './TaskCard';
 
 interface TaskColumnProps {
-  id: string;
   title: string;
   tasks: Task[];
 }
 
-const TaskColumn = ({ id, title, tasks }: TaskColumnProps) => {
+const TaskColumn: React.FC<TaskColumnProps> = ({ title, tasks }) => {
   return (
-    <Droppable droppableId={id}>
-      {(provided) => (
-        <div ref={provided.innerRef} {...provided.droppableProps}>
-          <h2>{title}</h2>
-          {tasks.map((task, index) => (
-            <Draggable key={task.id} draggableId={task.id} index={index}>
-              {(provided) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                >
-                  {task.title}
-                </div>
-              )}
-            </Draggable>
-          ))}
-          {provided.placeholder}
-        </div>
-      )}
-    </Droppable>
+    <div className="w-full p-4">
+      <h2 className="text-xl font-bold mb-4">{title}</h2>
+      <div className="space-y-4">
+        {tasks.map(task => (
+          <TaskCard key={task.id} task={task} />
+        ))}
+      </div>
+    </div>
   );
 };
 
 export default TaskColumn;
+
+
 
