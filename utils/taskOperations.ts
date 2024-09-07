@@ -111,8 +111,7 @@ export const addTask = async (task: Omit<Task, 'id'>) => {
 export const updateTaskStatus = async (taskId: string, newStatus: string) => {
   try {
     // Update task status in both collections
-    const taskDocRef = doc(db, 'task', taskId);
-    await updateDoc(taskDocRef, { status: newStatus });
+    
 
     const taskaDocRef = doc(db, 'tasks', taskId);
     await updateDoc(taskaDocRef, { status: newStatus });
@@ -126,9 +125,7 @@ export const updateTaskStatus = async (taskId: string, newStatus: string) => {
 // Function to delete a task
 export const deleteTask = async (taskId: string) => {
   try {
-    // Delete task from both collections
-    const taskDocRef = doc(db, 'task', taskId);
-    await deleteDoc(taskDocRef);
+    
 
     const taskaDocRef = doc(db, 'tasks', taskId);
     await deleteDoc(taskaDocRef);

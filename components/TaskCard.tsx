@@ -1,12 +1,13 @@
-// components/TaskCard.tsx
 import React from 'react';
 import { Task } from '../types/types';
+import { deleteTask } from '../utils/taskOperations'; // Import deleteTask function
 
 interface TaskCardProps {
   task: Task;
+  onDelete: (taskId: string) => void; // Add onDelete prop
 }
 
-const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
+const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete }) => {
   return (
     <div className="border border-gray-300 rounded-lg p-4 mb-4 shadow-lg bg-white">
       {/* Status */}
@@ -42,6 +43,14 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
           <strong>Deadline: </strong>{task.date}
         </div>
       </div>
+
+      {/* Delete Button */}
+      <button
+        className="mt-4 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
+        onClick={() => onDelete(task.id)}
+      >
+        Delete
+      </button>
     </div>
   );
 };
