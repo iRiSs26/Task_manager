@@ -99,7 +99,7 @@ export const getTasks = async () => {
 export const addTask = async (task: Omit<Task, 'id'>) => {
   try {
     // Add task to both collections
-    await addDoc(collection(db, 'task'), task);
+    // await addDoc(collection(db, 'task'), task);
     await addDoc(collection(db, 'tasks'), task);
     console.log('Task added successfully');
   } catch (error) {

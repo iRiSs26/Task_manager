@@ -1,8 +1,10 @@
 "use client"
 // components/TaskBoard.tsx
 // components/TaskBoard.tsx
-import React from 'react';
+// components/TaskBoard.tsx
+import React, { useState } from 'react';
 import TaskColumn from './TaskColumn';
+import TaskModal from './TaskModal'; // Import TaskModal for adding tasks
 import { Task } from '../types/types';
 
 interface TaskBoardProps {
@@ -14,16 +16,39 @@ interface TaskBoardProps {
 }
 
 const TaskBoard: React.FC<TaskBoardProps> = ({ tasks }) => {
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  // Function to handle opening/closing the modal
+  const toggleModal = () => setModalOpen(!isModalOpen);
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <TaskColumn title="To Do" tasks={tasks.todo} />
-      <TaskColumn title="In Progress" tasks={tasks.inProgress} />
-      <TaskColumn title="Completed" tasks={tasks.completed} />
+    <div className="container mx-auto p-4 relative">
+      <div className="mb-4">
+        <h1 className="text-2xl font-bold">Task Manager</h1>
+      </div>
+
+      {/* Create New Task button positioned at the top-right corner */}
+      <button
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition absolute top-4 right-4"
+        onClick={toggleModal}
+      >
+        Create New Task
+      </button>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+        <TaskColumn title="To Do" tasks={tasks.todo} />
+        <TaskColumn title="In Progress" tasks={tasks.inProgress} />
+        <TaskColumn title="Completed" tasks={tasks.completed} />
+      </div>
+
+      {/* Render TaskModal when modal is open */}
+      {isModalOpen && <TaskModal close={toggleModal} />}
     </div>
   );
 };
 
 export default TaskBoard;
+
 
 // import { useState, useEffect } from 'react';
 // import TaskModal from './TaskModal'; // Ensure correct path
