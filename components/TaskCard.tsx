@@ -1,58 +1,90 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { FaChevronDown } from 'react-icons/fa'; // Import the down arrow icon
 import { Task } from '../types/types';
-import { deleteTask } from '../utils/taskOperations'; // Import deleteTask function
+import { updateTaskStatus, deleteTask } from '../utils/taskOperations'; // Ensure these functions are imported
 
 interface TaskCardProps {
   task: Task;
-  onDelete: (taskId: string) => void; // Add onDelete prop
+  onStatusChange: (taskId: string, newStatus: string) => void;
+  onEdit: (task: Task) => void; // Callback for editing task
+  onDelete: (taskId: string) => void; // Callback for deleting task
 }
 
-const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete }) => {
+const TaskCard: React.FC<TaskCardProps> = ({ task, onStatusChange, onEdit, onDelete }) => {
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleStatusChange = (status: string) => {
+    onStatusChange(task.id, status);
+    setShowDropdown(false); // Close the dropdown after selection
+  };
+
+  const handleDelete = async () => {
+    await deleteTask(task.id); // Call deleteTask function
+    onDelete(task.id); // Notify parent component about the deletion
+  };
+
   return (
-    <div className="border border-gray-300 rounded-lg p-4 mb-4 shadow-lg bg-white">
-      {/* Status */}
-      <div className="text-xs font-bold text-gray-500 uppercase mb-2">
-        {task.status}
+    <div className="relative border p-4 rounded-lg bg-white shadow-lg">
+      {/* Task details */}
+      <div className="mb-4">
+        <h2 className="text-xl font-semibold">{task.title}</h2>
+        <p>{task.description}</p>
+        <p>Priority: {task.priority}</p>
       </div>
 
-      {/* Task content */}
-      <div className="flex flex-col space-y-2">
-        {/* Priority */}
-        <div className="flex items-center space-x-2">
-          <div className={`px-2 py-1 rounded text-xs font-semibold ${
-            task.priority === 'High' ? 'bg-red-200 text-red-600' :
-            task.priority === 'Medium' ? 'bg-yellow-200 text-yellow-600' :
-            'bg-green-200 text-green-600'
-          }`}>
-            {task.priority}
+      {/* Dropdown for status change */}
+      <div className="absolute top-2 right-2 z-10">
+        <button
+          onClick={() => setShowDropdown(prev => !prev)}
+          className="text-gray-600 hover:text-gray-800 focus:outline-none"
+        >
+          <FaChevronDown />
+        </button>
+        {showDropdown && (
+          <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-20">
+            <ul className="list-none p-2 m-0">
+              <li
+                className="p-2 hover:bg-gray-200 cursor-pointer"
+                onClick={() => handleStatusChange('TODO')}
+              >
+                To Do
+              </li>
+              <li
+                className="p-2 hover:bg-gray-200 cursor-pointer"
+                onClick={() => handleStatusChange('IN PROGRESS')}
+              >
+                In Progress
+              </li>
+              <li
+                className="p-2 hover:bg-gray-200 cursor-pointer"
+                onClick={() => handleStatusChange('COMPLETED')}
+              >
+                Completed
+              </li>
+            </ul>
           </div>
-
-          {/* Title */}
-          <span className="font-semibold text-lg">
-            {task.title}
-          </span>
-        </div>
-
-        {/* Description */}
-        <p className="text-gray-700 text-sm">
-          {task.description}
-        </p>
-
-        {/* Deadline */}
-        <div className="text-gray-500 text-xs">
-          <strong>Deadline: </strong>{task.date}
-        </div>
+        )}
       </div>
 
-      {/* Delete Button */}
-      <button
-        className="mt-4 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
-        onClick={() => onDelete(task.id)}
-      >
-        Delete
-      </button>
+      {/* Edit and Delete buttons */}
+      <div className="flex justify-between mt-4">
+        <button
+          onClick={() => onEdit(task)}
+          className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition"
+        >
+          Edit
+        </button>
+        <button
+          onClick={handleDelete}
+          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+        >
+          Delete
+        </button>
+      </div>
     </div>
   );
 };
 
 export default TaskCard;
+
+
