@@ -126,7 +126,7 @@ import React, { useState, useEffect } from 'react';
 import TaskColumn from './TaskColumn';
 import TaskModal from './TaskModal'; // Import TaskModal for adding tasks
 import { Task } from '../types/types';
-import { getTasks, updateTaskStatus, deleteTask, addTask } from '../utils/taskOperations'; // Ensure this fetches tasks correctly
+import { getTasks, updateTaskStatus, deleteTask} from '../utils/taskOperations'; // Ensure this fetches tasks correctly
 
 const TaskBoard: React.FC = () => {
   const [tasks, setTasks] = useState<{ todo: Task[], inProgress: Task[], completed: Task[] }>({
