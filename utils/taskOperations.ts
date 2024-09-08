@@ -1,59 +1,3 @@
-// import { collection, getDocs, addDoc, doc, updateDoc, deleteDoc } from 'firebase/firestore';
-// import { db } from '../lib/firebase';
-// import { Task } from '../types/types'; // Ensure correct path
-
-// // Function to fetch tasks from Firestore
-// export const getTasks = async () => {
-//   try {
-//     const taskCollectionRef = collection(db, 'tasks');
-//     const taskSnapshot = await getDocs(taskCollectionRef);
-//     const taskList: Task[] = taskSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Task));
-
-//     const tasks = {
-//       todo: taskList.filter(task => task.status === 'TODO'),
-//       inProgress: taskList.filter(task => task.status === 'IN PROGRESS'),
-//       completed: taskList.filter(task => task.status === 'COMPLETED')
-//     };
-
-//     return tasks;
-//   } catch (error) {
-//     console.error('Error fetching tasks:', error);
-//     return { todo: [], inProgress: [], completed: [] };
-//   }
-// };
-
-// // Function to add a new task to Firestore
-// export const addTask = async (task: Omit<Task, 'id'>) => {
-//   try {
-//     await addDoc(collection(db, 'tasks'), task);
-//     console.log('Task added successfully');
-//   } catch (error) {
-//     console.error('Error adding task:', error);
-//   }
-// };
-
-// // Function to update the status of a task
-// export const updateTaskStatus = async (taskId: string, newStatus: string) => {
-//   try {
-//     const taskDocRef = doc(db, 'tasks', taskId);
-//     await updateDoc(taskDocRef, { status: newStatus });
-//     console.log('Task status updated successfully');
-//   } catch (error) {
-//     console.error('Error updating task status:', error);
-//   }
-// };
-
-// // Function to delete a task
-// export const deleteTask = async (taskId: string) => {
-//   try {
-//     const taskDocRef = doc(db, 'tasks', taskId);
-//     await deleteDoc(taskDocRef);
-//     console.log('Task deleted successfully');
-//   } catch (error) {
-//     console.error('Error deleting task:', error);
-//   }
-// };
-// utils/taskOperations.ts
 
 import { collection, getDocs, addDoc, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
@@ -135,5 +79,3 @@ export const deleteTask = async (taskId: string) => {
     console.error('Error deleting task:', error);
   }
 };
-
-

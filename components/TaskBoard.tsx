@@ -1,3 +1,120 @@
+//  "use client"
+
+
+
+// import React, { useEffect, useState } from 'react';
+// import TaskCard from './TaskCard'; // Ensure the correct path
+// import { Task } from '../types/types'; // Ensure the correct path
+// import { getTasks } from '../utils/taskOperations'; // Ensure the correct path
+// import TaskModal from './TaskModal'; // Ensure the correct path
+
+// const TaskBoard: React.FC = () => {
+//   const [tasks, setTasks] = useState<{ todo: Task[]; inProgress: Task[]; completed: Task[] }>({
+//     todo: [],
+//     inProgress: [],
+//     completed: []
+//   });
+//   const [isModalOpen, setIsModalOpen] = useState(false);
+
+//   useEffect(() => {
+//     const fetchTasks = async () => {
+//       const tasks = await getTasks();
+//       setTasks(tasks);
+//     };
+
+//     fetchTasks();
+//   }, []);
+
+//   const handleStatusChange = async (taskId: string, newStatus: string) => {
+//     await updateTaskStatus(taskId, newStatus);
+//     const updatedTasks = await getTasks();
+//     setTasks(updatedTasks);
+//   };
+
+//   const handleEdit = (task: Task) => {
+//     // Show the task modal for editing
+//     // You might need to implement this functionality
+//   };
+
+//   const handleDelete = async (taskId: string) => {
+//     await deleteTask(taskId);
+//     const updatedTasks = await getTasks();
+//     setTasks(updatedTasks);
+//   };
+
+//   const handleCreateNewTask = () => {
+//     setIsModalOpen(true);
+//   };
+
+//   const closeModal = () => {
+//     setIsModalOpen(false);
+//   };
+
+//   return (
+//     <div className="relative p-6">
+//       {/* Create New Task Button */}
+//       <button
+//         onClick={handleCreateNewTask}
+//         className="absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded shadow-md"
+//       >
+//         Create New Task
+//       </button>
+
+//       {/* Task Board */}
+//       <div className="grid grid-cols-3 gap-4 mt-12">
+//         {/* To Do Column */}
+//         <div className="p-2">
+//           <h2 className="text-xl font-semibold mb-4">To Do</h2>
+//           {tasks.todo.map(task => (
+//             <TaskCard
+//               key={task.id}
+//               task={task}
+//               onStatusChange={handleStatusChange}
+//               onEdit={handleEdit}
+//               onDelete={handleDelete}
+//             />
+//           ))}
+//         </div>
+
+//         {/* In Progress Column */}
+//         <div className="p-2">
+//           <h2 className="text-xl font-semibold mb-4">In Progress</h2>
+//           {tasks.inProgress.map(task => (
+//             <TaskCard
+//               key={task.id}
+//               task={task}
+//               onStatusChange={handleStatusChange}
+//               onEdit={handleEdit}
+//               onDelete={handleDelete}
+//             />
+//           ))}
+//         </div>
+
+//         {/* Completed Column */}
+//         <div className="p-2">
+//           <h2 className="text-xl font-semibold mb-4">Completed</h2>
+//           {tasks.completed.map(task => (
+//             <TaskCard
+//               key={task.id}
+//               task={task}
+//               onStatusChange={handleStatusChange}
+//               onEdit={handleEdit}
+//               onDelete={handleDelete}
+//             />
+//           ))}
+//         </div>
+//       </div>
+
+//       {/* Task Modal */}
+//       {isModalOpen && <TaskModal closeModal={closeModal} />}
+//     </div>
+//   );
+// };
+
+// export default TaskBoard;
+
+
+
 "use client"
 
 import React, { useState, useEffect } from 'react';
@@ -113,7 +230,7 @@ const TaskBoard: React.FC = () => {
         Create New Task
       </button>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+      <div className="flex space-x-4 mt-4">
         <TaskColumn
           title="To Do"
           tasks={tasks.todo}
@@ -144,7 +261,4 @@ const TaskBoard: React.FC = () => {
 };
 
 export default TaskBoard;
-
-
-
 
